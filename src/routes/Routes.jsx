@@ -5,9 +5,8 @@ import Home from '../pages/Home';
 import MyBookings from '../pages/MyBookings';
 import FAQ from '../pages/FAQ';
 import AboutUs from '../pages/AboutUs';
-import Login from '../pages/Login';
-import Register from '../pages/Register';
 import Rooms from '../pages/Rooms';
+import LoginRegister from '../pages/LoginRegister';
 
 const routes = createBrowserRouter([
     {
@@ -16,34 +15,30 @@ const routes = createBrowserRouter([
         errorElement: <Error404></Error404>,
         children: [
             {
-                path: '/',
+                index:true,
                 element: <Home></Home>
             },
             {
-                path: '/rooms',
+                path: 'rooms',
                 element: <Rooms></Rooms>
             },
             {
-                path: '/my-bookings',
+                path: 'my-bookings',
                 element: <MyBookings></MyBookings>
             },
             {
-                path: '/about-us',
+                path: 'about-us',
                 element: <AboutUs></AboutUs>
             },
             {
-                path: '/faq',
+                path: 'faq',
                 element: <FAQ></FAQ>
             }
         ]
     },
     {
-        path: '/login',
-        element: <Login></Login>
-    },
-    {
-        path: '/register',
-        element: <Register></Register>
+        path: '/login-register',
+        element: <LoginRegister></LoginRegister>
     }
 ]);
 
