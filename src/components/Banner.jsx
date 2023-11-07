@@ -4,15 +4,20 @@ import withAutoplay from 'react-awesome-slider/dist/autoplay';
 import 'react-awesome-slider/dist/styles.css';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 const AutoplaySlider = withAutoplay(AwesomeSlider);
 
 const Banner = () => {
+    const [ featureds, setFeatureds ] = useState([]);
     useEffect(() => {
         AOS.init({
             duration: 400
         });
+        //getting imgs
+        fetch('http://localhost:5000/featured-rooms')
+        .then(resp => resp.json())
+        .then(data => setFeatureds(data))
     }, []);
     return (
         <div className='grid grid-cols-1 lg:grid-cols-2'>
@@ -27,9 +32,9 @@ const Banner = () => {
                     cancelOnInteraction={false} // should stop playing on user interaction
                     interval={3000}
                 >
-                    <div data-src="https://i.ibb.co/FmcfYpF/Education.png" />
-                    <div data-src="https://i.ibb.co/FmcfYpF/Education.png" />
-                    <div data-src="https://i.ibb.co/FmcfYpF/Education.png" />
+                    {
+                        featureds?.map(featured => <div key={featured._id} data-src={featured.image}></div>)
+                    }
                 </AutoplaySlider></div>
         </div>);
 };

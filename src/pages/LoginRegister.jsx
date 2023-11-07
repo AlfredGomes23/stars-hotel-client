@@ -4,8 +4,18 @@ import { useEffect } from 'react';
 import { FcGoogle, FcHome } from "react-icons/fc";
 import { Link } from 'react-router-dom';
 import useMyContext from '../hooks/useMyContext';
+import toast, { Toaster } from 'react-hot-toast';
 
 const LoginRegister = () => {
+    const {
+        user,
+        // setUser,
+        signUp,
+        updateUser,
+        signInByEmail,
+        signInByGoogle
+    } = useMyContext();
+    console.log(user);
     
     const handleLogin = e => {
         e.preventDefault();
@@ -14,6 +24,17 @@ const LoginRegister = () => {
         const email = form.email.value;
         const password = form.password.value;
         console.log(email, password);
+
+        //log in
+        signInByEmail(email, password)
+        .then(res => {
+            console.log(res.user);
+            toast.success("LogIn Successful.");
+        })
+        .catch(err => {
+            console.log(err);
+            toast.error(err.message);
+        })
     };
     const handleRegister = e => {
         e.preventDefault();
@@ -24,9 +45,35 @@ const LoginRegister = () => {
         const email = form.email.value;
         const password = form.password.value;
         console.log(name, url, email, password);
+        //create new user
+        signUp( email, password )
+        .then(res => {
+            console.log("created",res.user);
+            //update profile
+            updateUser( name, url )
+            .then(() => {
+                console.log("updated");
+                toast.success("Registration Successful.");
+            }).catch(err => {
+                console.log(err.message);
+                toast.error(err.message);
+            });
+        })
+        .catch(err => {
+            console.log(err.message);
+            toast.error(err.message);
+        }) 
     };
     const googleLogin = () => {
-
+        signInByGoogle()
+        .then(res => {
+            console.log(res.user);
+            toast.success("Google Login Successful.");
+        })
+        .catch(err => {
+            console.log(err);
+            toast.error(err.message);
+        });
     };
 
     useEffect(() => {
@@ -37,6 +84,12 @@ const LoginRegister = () => {
 
     return (
         <div>
+            <div>
+            <Toaster
+                position="top-center"
+                reverseOrder={true}
+            />
+        </div>
             <div className="flex flex-col md:flex-row bg-gradient-to-r from-accent to-primary">
                 {/* login */}
                 <div className="hero min-h-screen p-5 " data-aos="slide-left">
@@ -68,7 +121,7 @@ const LoginRegister = () => {
                                     <button className="btn btn-accent w-fit mx-auto">Login</button>
                                 </div>
                             </form>
-                            <div onClick={() => googleLogin()} className='flex justify-center items-center btn'>
+                            <div onClick={googleLogin} className='flex justify-center items-center btn'>
                                 <p className='text-xl block  mr-1'>Login With</p>
                                 <FcGoogle className='text-5xl'></FcGoogle>
                             </div>
@@ -134,7 +187,6 @@ const LoginRegister = () => {
                     </div>
                 </div>
             </div>
-            {/* footer */}
             <div className="btm-nav bg-gradient-to-r from-accent to-primary">
                 <Link to='/' className='pb-10'><p className='btn btn-ghost text-5xl'><FcHome></FcHome></p></Link>
             </div>

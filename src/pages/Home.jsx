@@ -1,13 +1,19 @@
 import Banner from "../components/Banner";
 import FeaturedRooms from "../components/FeaturedRooms";
 import Newsletter from "../components/Newsletter";
+import { Toaster } from "react-hot-toast"
+import OfferBanner from "../components/OfferBanner";
 
 const Home = () => {
     return (
         <div>
+            <div className="font-semibold">
+                <Toaster position="top-center" reverseOrder={true} />
+            </div>
             <Banner></Banner>
-            <Newsletter></Newsletter>
+            <OfferBanner></OfferBanner>
             <FeaturedRooms></FeaturedRooms>
+            <Newsletter></Newsletter>
         </div>
     );
 };

@@ -1,6 +1,16 @@
 import { Link, NavLink } from "react-router-dom";
+import useMyContext from "../hooks/useMyContext";
+import toast from "react-hot-toast";
 
 const Navbar = () => {
+    const { user, logOut } = useMyContext();
+    console.log(user);
+    
+    const handleLogOut = () =>{
+        logOut();
+        console.log("Logged OUT.");
+        toast.success("Logout Successful.");
+    }
     const links = <>
         <li><NavLink to='/'>Home</NavLink></li>
         <li><NavLink to='/rooms'>Rooms</NavLink></li>
@@ -30,6 +40,8 @@ const Navbar = () => {
             </div>
             {/* profile dropdown */}
             <div className="navbar-end gap-3">
+                {
+                    user?.email ?
                 <div className="dropdown dropdown-end">
                     <label tabIndex={0} className="m-1">
                         <div className="avatar">
@@ -41,11 +53,9 @@ const Navbar = () => {
                     <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-fit">
                         <li className="p-2 text-xl">name</li>
                         <li className="p-2 text-xl">email</li>
-                        <li className="btn btn-sm w-fit mx-auto">Logout</li>
+                        <li onClick={handleLogOut} className="btn btn-sm w-fit mx-auto">Logout</li>
                     </ul>
-                </div>
-                {
-                    
+                </div> :
                     <Link to='/login-register' className="btn btn-sm btn-primary">Login</Link>
                 }
             </div>
