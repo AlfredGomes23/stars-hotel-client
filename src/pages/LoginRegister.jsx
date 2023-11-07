@@ -98,7 +98,7 @@ const LoginRegister = () => {
                             <p className="font-bold">Have an account?</p>
                             <h1 className="text-5xl font-bold">Login here</h1>
                         </div>
-                        <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100 pb-5">
+                        <div className="card flex-shrink-0 w-full max-w-sm bg-base-100 pb-5">
                             <form onSubmit={handleLogin} className="card-body">
                                 <div className="form-control">
                                     <label className="label">
@@ -135,7 +135,7 @@ const LoginRegister = () => {
                             <p className="font-bold">New here?</p>
                             <h1 className="text-5xl font-bold">Register now</h1>
                         </div>
-                        <div className="card flex-shrink-0  w-fit shadow-2xl bg-base-100">
+                        <div className="card flex-shrink-0  w-fit bg-base-100">
                             <form onSubmit={handleRegister} className="card-body">
                                 {/* name url */}
                                 <div className="flex flex-col lg:flex-row gap-3">

@@ -1,10 +1,19 @@
 import { Link, NavLink } from "react-router-dom";
 import useMyContext from "../hooks/useMyContext";
 import toast from "react-hot-toast";
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+import { useEffect } from 'react';
 
 const Navbar = () => {
     const { user, logOut } = useMyContext();
     console.log(user);
+
+    useEffect(() => {
+        AOS.init({
+            duration: 400
+        });
+    }, []);
     
     const handleLogOut = () =>{
         logOut();
@@ -19,7 +28,7 @@ const Navbar = () => {
         <li><NavLink to='/faq'>FAQ</NavLink></li>
     </>
     return (
-        <div className={"navbar lg:mt-5 shadow-lg bg-base-300 rounded-lg mb-3"}>
+        <div className="navbar lg:mt-5 shadow-lg bg-base-300 rounded-lg mb-3" data-aos="slide-down">
             <div className="navbar-start">
                 <div className="dropdown">
                     <label tabIndex={0} className="btn btn-ghost lg:hidden">
