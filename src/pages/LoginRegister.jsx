@@ -33,11 +33,12 @@ const LoginRegister = () => {
         //log in
         signInByEmail(email, password)
         .then(res => {
-            console.log(res.user);
-            toast.success("LogIn Successful.");
+            // console.log(res.user);
             
             //navigate to previous route
             navigate(from, { replace: true }); 
+
+            toast.success("LogIn Successful.");
         })
         .catch(err => {
             console.log(err);
@@ -61,11 +62,12 @@ const LoginRegister = () => {
             //update profile
             updateUser( name, url )
             .then(() => {
-                console.log("updated");
-                toast.success("Registration Successful.");
-
+                // console.log("updated");
+                
                 //navigate to previous route
-                navigate(from, { replace: true }); 
+                navigate(from, { replace: true });
+
+                toast.success("Registration Successful.");
             }).catch(err => {
                 console.log(err.message);
                 toast.error(err.message);
@@ -79,11 +81,12 @@ const LoginRegister = () => {
     const googleLogin = () => {
         signInByGoogle()
         .then(res => {
-            console.log(res.user);
-            toast.success("Google Login Successful.");
-
+            // console.log(res.user);
+            
             //navigate to previous route
-            navigate(from, { replace: true }); 
+            navigate(from, { replace: true });
+
+            toast.success("Google Login Successful.");
         })
         .catch(err => {
             console.log(err);

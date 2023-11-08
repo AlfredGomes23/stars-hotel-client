@@ -3,6 +3,7 @@ import FeaturedRooms from "../components/FeaturedRooms";
 import Newsletter from "../components/Newsletter";
 import { Toaster } from "react-hot-toast"
 import OfferBanner from "../components/OfferBanner";
+import { Helmet } from "react-helmet-async";
 
 const Home = () => {
     return (
@@ -13,6 +14,9 @@ const Home = () => {
                     reverseOrder={true}
                 />
             </div>
+            <Helmet>
+                <title>Home</title>
+            </Helmet>
             <Banner></Banner>
             <OfferBanner></OfferBanner>
             <FeaturedRooms></FeaturedRooms>
