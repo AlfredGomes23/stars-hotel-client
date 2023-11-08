@@ -1,9 +1,13 @@
 import {Link} from 'react-router-dom'
 import { AiFillFacebook, AiFillTwitterCircle, AiOutlineLinkedin } from "react-icons/ai";
+import { Helmet } from "react-helmet-async";
 
 const AboutUs = () => {
     return (
         <div>
+            <Helmet>
+                <title>About Us</title>
+            </Helmet>
             {/* about us */}
             <div className="flex flex-col lg:flex-row">
                 <div className="flex-1">

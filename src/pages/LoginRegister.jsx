@@ -4,7 +4,8 @@ import { useEffect } from 'react';
 import { FcGoogle, FcHome } from "react-icons/fc";
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import useMyContext from '../hooks/useMyContext';
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
+import { Helmet } from "react-helmet-async";
 
 const LoginRegister = () => {
     const {
@@ -20,7 +21,7 @@ const LoginRegister = () => {
     const navigate = useNavigate();
     const location = useLocation();
     let from = location.state?.from?.pathname || '/';
-    
+
     const handleLogin = e => {
         e.preventDefault();
 
@@ -32,18 +33,17 @@ const LoginRegister = () => {
 
         //log in
         signInByEmail(email, password)
-        .then(res => {
-            // console.log(res.user);
-            
-            //navigate to previous route
-            navigate(from, { replace: true }); 
+            .then(() => {
+                toast.success("LogIn Successful.");
 
-            toast.success("LogIn Successful.");
-        })
-        .catch(err => {
-            console.log(err);
-            toast.error(err.message);
-        })
+                //navigate to previous route
+                navigate(from, { replace: true });
+
+            })
+            .catch(err => {
+                console.log(err);
+                toast.error(err.message);
+            })
     };
     const handleRegister = e => {
         e.preventDefault();
@@ -56,42 +56,41 @@ const LoginRegister = () => {
         const password = form.password.value;
         console.log(name, url, email, password);
         //create new user
-        signUp( email, password )
-        .then(res => {
-            console.log("created",res.user);
-            //update profile
-            updateUser( name, url )
-            .then(() => {
-                // console.log("updated");
-                
-                //navigate to previous route
-                navigate(from, { replace: true });
+        signUp(email, password)
+            .then(res => {
+                console.log("created", res.user);
+                //update profile
+                updateUser(name, url)
+                    .then(() => {
+                        // console.log("updated");
+                        toast.success("Registration Successful.");
 
-                toast.success("Registration Successful.");
-            }).catch(err => {
+                        //navigate to previous route
+                        navigate(from, { replace: true });
+
+                    }).catch(err => {
+                        console.log(err.message);
+                        toast.error(err.message);
+                    });
+            })
+            .catch(err => {
                 console.log(err.message);
                 toast.error(err.message);
-            });
-        })
-        .catch(err => {
-            console.log(err.message);
-            toast.error(err.message);
-        }) 
+            })
     };
     const googleLogin = () => {
         signInByGoogle()
-        .then(res => {
-            // console.log(res.user);
-            
-            //navigate to previous route
-            navigate(from, { replace: true });
+            .then(() => {
+                toast.success("Google Login Successful.");
 
-            toast.success("Google Login Successful.");
-        })
-        .catch(err => {
-            console.log(err);
-            toast.error(err.message);
-        });
+                //navigate to previous route
+                navigate(from, { replace: true });
+
+            })
+            .catch(err => {
+                console.log(err);
+                toast.error(err.message);
+            });
     };
 
     useEffect(() => {
@@ -102,12 +101,15 @@ const LoginRegister = () => {
 
     return (
         <div>
-            <div>
-            <Toaster
-                position="top-center"
-                reverseOrder={true}
-            />
-        </div>
+            {/* <div>
+                <Toaster
+                    position="top-center"
+                    reverseOrder={true}
+                />
+            </div> */}
+                <Helmet>
+                    <title>Login-Register</title>
+                </Helmet>
             <div className="flex flex-col md:flex-row bg-gradient-to-r from-accent to-primary">
                 {/* login */}
                 <div className="hero min-h-screen p-5 " data-aos="slide-left">

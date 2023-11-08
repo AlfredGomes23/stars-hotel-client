@@ -1,4 +1,5 @@
 import useMyContext from "../hooks/useMyContext";
+import { Helmet } from "react-helmet-async";
 
 const profile = () => {
     const { user, loading } = useMyContext();
@@ -7,7 +8,10 @@ const profile = () => {
 
     return (
         <div>
-            <h1 className="text-4xl text-center underline">Your Profile</h1>
+            <Helmet>
+                <title>My Profile</title>
+            </Helmet>
+            <h1 className="text-4xl text-center underline">My Profile</h1>
             <div className="flex flex-col-reverse lg:flex-row">
                 <div className="lg:w-2/3 p-3 text-center flex flex-col justify-center items-center">
                     <h2 className="text-3xl md:text-4xl">Name: {user?.displayName}</h2>

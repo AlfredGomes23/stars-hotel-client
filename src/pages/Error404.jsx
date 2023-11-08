@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { useEffect } from 'react';
+import { Helmet } from "react-helmet-async";
 
 const Error404 = () => {
     useEffect(() => {
@@ -12,6 +13,10 @@ const Error404 = () => {
     }, []);
     return (
         <div>
+
+            <Helmet>
+                <title>Error 404</title>
+            </Helmet>
             <Link to='/' className="btn-sm lg:btn-md btn mt-5 mb-5 md:mb-0 md:ml-5 btn-secondary">
                 <AiOutlineArrowLeft></AiOutlineArrowLeft>
                 <AiTwotoneHome className="text-xl"></AiTwotoneHome>

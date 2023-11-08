@@ -1,6 +1,8 @@
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { useEffect } from 'react';
+import { Helmet } from "react-helmet-async";
+
 
 const FAQ = () => {
     useEffect(() => {
@@ -10,6 +12,10 @@ const FAQ = () => {
     }, []);
     return (
         <div className="w-2/3 mx-auto mb-5">
+
+            <Helmet>
+                <title>FAQ</title>
+            </Helmet>
             <h1 className="text-2xl lg:text-5xl text-center text-primary underline my-3">FAQ</h1>
             <div className="collapse bg-base-200" data-aos="slide-right">
                 <input type="radio" name="my-accordion-1" />
