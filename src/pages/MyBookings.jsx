@@ -18,7 +18,36 @@ const MyBookings = () => {
                 setComing(false);
             })
     }, [user]);
-    
+    const handleUpdate = () => {
+        //
+    };
+    const handleDelete = id => {
+        swal({
+            title: "Are you sure?",
+            text: "Once deleted, you will not be able to recover this!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        }).then((willDelete) => {
+                if (willDelete) {
+                    if (willDelete) {
+                        fetch(`http://localhost:5000/bookings/${id}`, {
+                            method: "DELETE"
+                        })
+                            .then(resp => resp.json())
+                            .then(data => {
+                                console.log(data);
+                                if (data.deletedCount) toast.error("Deleted.");
+                                const remaining = bookings.filter(booking => booking._id !== id);
+                                setBookings(remaining);
+                            })
+                    }
+                } else {
+                    toast.success("Cancel.");
+                }
+            });
+
+    }
 
     //loading
     if (coming) return <span className="loading loading-bars loading-lg flex justify-center items-center mx-auto"></span>;
@@ -30,7 +59,7 @@ const MyBookings = () => {
             </Helmet>
             <h1 className="text-4xl my-10 underline">My Bookings</h1>
             <div>{
-                bookings?.map(booking => <BookingCard key={booking._id} booking={booking} ></BookingCard>)
+                bookings?.map(booking => <BookingCard key={booking._id} booking={booking} handleDelete={handleDelete} handleUpdate={handleUpdate}></BookingCard>)
             }</div>
         </div>
     );

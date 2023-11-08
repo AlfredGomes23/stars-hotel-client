@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 
-const BookingCard = ({ booking }) => {
+const BookingCard = ({ booking, handleDelete, handleUpdate }) => {
     const { _id, type, img, date, price, description } = booking;
     
     return (
@@ -12,8 +12,8 @@ const BookingCard = ({ booking }) => {
                 <p className="text-2xl">Booking Date: {date}</p>
                 <p className="text-2xl">Price: {price}</p>
                 <div className="card-actions justify-end">
-                    <button className="btn btn-warning btn-xs sm:btn-sm md:btn-md">Update</button>
-                    <button  className="btn btn-error btn-xs sm:btn-sm md:btn-md">Delete</button>
+                    <button onClick={()=>handleUpdate(_id)} className="btn btn-warning btn-xs sm:btn-sm md:btn-md">Update</button>
+                    <button onClick={()=>handleDelete(_id)} className="btn btn-error btn-xs sm:btn-sm md:btn-md">Delete</button>
                 </div>
             </div>
         </div>
