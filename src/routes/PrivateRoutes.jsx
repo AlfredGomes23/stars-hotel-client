@@ -12,7 +12,7 @@ const PrivateRoutes = ({ children }) => {
     if (loading) return <span className="loading loading-bars loading-lg flex justify-center items-center text-center"></span>;
     if(user?.email) return children;
 
-    return <Navigate to='/login' state={{ from: location }} replace></Navigate>
+    return <Navigate to='/login-register' state={{ from: location }} replace></Navigate>
 };
 
 export default PrivateRoutes;

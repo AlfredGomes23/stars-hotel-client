@@ -7,8 +7,11 @@ import OfferBanner from "../components/OfferBanner";
 const Home = () => {
     return (
         <div>
-            <div className="font-semibold">
-                <Toaster position="top-center" reverseOrder={true} />
+            <div>
+                <Toaster
+                    position="top-center"
+                    reverseOrder={true}
+                />
             </div>
             <Banner></Banner>
             <OfferBanner></OfferBanner>

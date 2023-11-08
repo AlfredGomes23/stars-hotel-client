@@ -136,7 +136,7 @@ const LoginRegister = () => {
                                     <button className="btn btn-accent w-fit mx-auto">Login</button>
                                 </div>
                             </form>
-                            <div onClick={googleLogin} className='flex justify-center items-center btn'>
+                            <div onClick={googleLogin} className='flex justify-center items-center btn w-fit mx-auto'>
                                 <p className='text-xl block  mr-1'>Login With</p>
                                 <FcGoogle className='text-5xl'></FcGoogle>
                             </div>

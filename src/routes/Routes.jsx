@@ -7,6 +7,8 @@ import FAQ from '../pages/FAQ';
 import AboutUs from '../pages/AboutUs';
 import Rooms from '../pages/Rooms';
 import LoginRegister from '../pages/LoginRegister';
+import Profile from '../pages/Profile.jsx';
+import PrivateRoutes from './PrivateRoutes';
 
 const routes = createBrowserRouter([
     {
@@ -15,7 +17,7 @@ const routes = createBrowserRouter([
         errorElement: <Error404></Error404>,
         children: [
             {
-                index:true,
+                index: true,
                 element: <Home></Home>
             },
             {
@@ -24,7 +26,15 @@ const routes = createBrowserRouter([
             },
             {
                 path: 'my-bookings',
-                element: <MyBookings></MyBookings>
+                element: <PrivateRoutes>
+                    <MyBookings></MyBookings>
+                </PrivateRoutes>
+            },
+            {
+                path: 'profile',
+                element: <PrivateRoutes>
+                    <Profile></Profile>
+                </PrivateRoutes>
             },
             {
                 path: 'about-us',
