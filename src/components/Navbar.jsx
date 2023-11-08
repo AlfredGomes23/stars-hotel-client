@@ -7,18 +7,22 @@ import { useEffect } from 'react';
 
 const Navbar = () => {
     const { user, logOut } = useMyContext();
-    console.log(user);
+    // console.log(user);
 
     useEffect(() => {
         AOS.init({
             duration: 400
         });
     }, []);
-    
-    const handleLogOut = () =>{
-        logOut();
-        console.log("Logged OUT.");
-        toast.success("Logout Successful.");
+
+    const handleLogOut = () => {
+        logOut()
+            .then(() => {
+                console.log("Logged OUT.");
+                toast.success("Logout Successful.");
+            }).catch(err => {
+                console.log(err.message);
+            });
     }
     const links = <>
         <li><NavLink to='/'>Home</NavLink></li>
@@ -50,22 +54,17 @@ const Navbar = () => {
             {/* profile dropdown */}
             <div className="navbar-end gap-3">
                 {
-                    user?.email ?
-                <div className="dropdown dropdown-end">
-                    <label tabIndex={0} className="m-1">
-                        <div className="avatar">
-                            <div className="w-12 mask mask-squircle">
-                                <img src="https://i.ibb.co/FmcfYpF/Education.png" />
-                            </div>
+                    user?.email &&
+                    <Link to='/profile' className="avatar">
+                        <div className="w-12 rounded-xl">
+                            <img src={user?.photoURL} />
                         </div>
-                    </label>
-                    <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-fit">
-                        <li className="p-2 text-xl">name</li>
-                        <li className="p-2 text-xl">email</li>
-                        <li onClick={handleLogOut} className="btn btn-sm w-fit mx-auto">Logout</li>
-                    </ul>
-                </div> :
-                    <Link to='/login-register' className="btn btn-sm btn-primary">Login</Link>
+                    </Link>
+                }
+                {
+                    user?.email ?
+                        <button onClick={handleLogOut} className="btn btn-sm w-fit">Logout</button> :
+                        <Link to='/login-register' className="btn btn-sm btn-primary">Login</Link>
                 }
             </div>
         </div>

@@ -2,24 +2,29 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { useEffect } from 'react';
 import { FcGoogle, FcHome } from "react-icons/fc";
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import useMyContext from '../hooks/useMyContext';
 import toast, { Toaster } from 'react-hot-toast';
 
 const LoginRegister = () => {
     const {
-        user,
         // setUser,
         signUp,
         updateUser,
         signInByEmail,
         signInByGoogle
     } = useMyContext();
-    console.log(user);
+    // console.log(user);
+
+    //managing auto routing
+    const navigate = useNavigate();
+    const location = useLocation();
+    let from = location.state?.from?.pathname || '/';
     
     const handleLogin = e => {
         e.preventDefault();
 
+        //getting inputs
         const form = e.target;
         const email = form.email.value;
         const password = form.password.value;
@@ -30,6 +35,9 @@ const LoginRegister = () => {
         .then(res => {
             console.log(res.user);
             toast.success("LogIn Successful.");
+            
+            //navigate to previous route
+            navigate(from, { replace: true }); 
         })
         .catch(err => {
             console.log(err);
@@ -39,6 +47,7 @@ const LoginRegister = () => {
     const handleRegister = e => {
         e.preventDefault();
 
+        //getting inputs
         const form = e.target;
         const name = form.name.value;
         const url = form.url.value;
@@ -54,6 +63,9 @@ const LoginRegister = () => {
             .then(() => {
                 console.log("updated");
                 toast.success("Registration Successful.");
+
+                //navigate to previous route
+                navigate(from, { replace: true }); 
             }).catch(err => {
                 console.log(err.message);
                 toast.error(err.message);
@@ -69,6 +81,9 @@ const LoginRegister = () => {
         .then(res => {
             console.log(res.user);
             toast.success("Google Login Successful.");
+
+            //navigate to previous route
+            navigate(from, { replace: true }); 
         })
         .catch(err => {
             console.log(err);
