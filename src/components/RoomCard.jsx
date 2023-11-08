@@ -6,8 +6,8 @@ const RoomCard = ({ room }) => {
     // console.log(room);
 
     return (
-        <Link to={`/rooms/${_id}`} className="card card-compact w-96 bg-base-100 shadow-xl">
-            <figure><img className="h-60 rounded-lg overflow-hidden" src={img} alt={type} /></figure>
+        <Link to={`/rooms/${_id}`} className="card card-compact w-96 bg-base-100 shadow-xl mx-auto">
+            <figure><img className="h-60 w-80 rounded-lg overflow-hidden" src={img} alt={type} /></figure>
             <div className="card-body">
                 <h2 className="card-title text-2xl">{type}</h2>
                 <div className='flex justify-between'>
