@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useParams } from 'react-router-dom';
 import useMyContext from "../hooks/useMyContext";
+import toast from "react-hot-toast";
 
 const RoomDetails = () => {
     const { user } = useMyContext();
@@ -26,8 +27,24 @@ const RoomDetails = () => {
         const email = from.email.value;
         const date = from.date.value;
         console.log(email, date);
+
         //book room
-    }
+        const b_price = discount || price;
+        const booking = {
+            email, roomId: id, date, price: b_price, description, img, type
+        }
+        fetch('http://localhost:5000/bookings', {
+            method: "POST",
+            headers: {
+                "content-type": "application/json"
+            },
+            body: JSON.stringify(booking)
+        }).then(res => res.json())
+            .then(data => {
+                console.log(data);
+                if (data?.insertedId) toast.success('Room Booked.');
+            });
+    };
 
     //loading data
     if (coming) return <span className="loading loading-bars loading-lg flex justify-center items-center mx-auto"></span>;
@@ -83,13 +100,13 @@ const RoomDetails = () => {
                                 <div className="form-control">
                                     <label className="input-group input-group-vertical w-80">
                                         <span>Your Email</span>
-                                        <input type="email" name="email" defaultValue={user?.email} className="input input-bordered" disabled   />
+                                        <input type="email" name="email" defaultValue={user?.email} className="input input-bordered" disabled />
                                     </label>
                                 </div>
                                 <div className="form-control">
                                     <label className="input-group input-group-vertical w-80">
                                         <span>Date</span>
-                                        <input type="date" name="date" className="input input-bordered" required/>
+                                        <input type="date" name="date" className="input input-bordered" required />
                                     </label>
                                 </div>
                             </div>

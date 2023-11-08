@@ -32,7 +32,7 @@ const Rooms = () => {
             <Helmet>
                 <title>Rooms</title>
             </Helmet>
-            <div className="flex text-center">
+            <div className="flex text-center mt-20">
                 <h1 className="flex-1 text-2xl md:text-3xl text-primary underline lg:text-4xl mb-10">Rooms in Hotel </h1>
                 <p className="text-lg underline">Sort by:
                 <span onClick={handleSort} className="btn btn-accent mr-2">{sort? "Default" : "Price"}</span></p>

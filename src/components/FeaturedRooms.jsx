@@ -26,8 +26,8 @@ const FeaturedRooms = () => {
                     <div className="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2 items-center ">
                         <a href="#slideF4" className="btn btn-ghost text-4xl">❮</a>
                         <div className="flex flex-col justify-center items-center gap-5">
-                            <p className="lg:text-2xl w-1/2 mx-auto text-center text-white bg-[#0000005a] p-2 lg:p-8 rounded-xl">{featured[0]?.description}</p>
-                            <button className="btn btn-ghost btn-lg outline-double outline-primary text-secondary w-fit">Book Now</button>
+                            <p className="lg:text-2xl md:w-1/2 mx-auto text-center text-white bg-[#0000005a] p-2 lg:p-8 rounded-xl">{featured[0]?.description}</p>
+                            <button className="btn btn-ghost lg:lg:btn-lg outline-double outline-primary text-secondary w-fit">Book Now</button>
                         </div>
                         <a href="#slideF2" className="btn btn-ghost text-4xl">❯</a>
                     </div>
@@ -37,8 +37,8 @@ const FeaturedRooms = () => {
                     <div className="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2 items-center">
                         <a href="#slideF1" className="btn btn-ghost text-white text-4xl">❮</a>
                         <div className="flex flex-col justify-center items-center gap-5">
-                            <p className="lg:text-2xl w-1/2 mx-auto text-center text-white bg-[#0000005a] p-2 lg:p-8 rounded-xl">{featured[1]?.description}</p>
-                            <button className="btn btn-ghost btn-lg outline-double outline-primary text-secondary w-fit">Book Now</button>
+                            <p className="lg:text-2xl md:w-1/2 mx-auto text-center text-white bg-[#0000005a] p-2 lg:p-8 rounded-xl">{featured[1]?.description}</p>
+                            <button className="btn btn-ghost lg:btn-lg outline-double outline-primary text-secondary w-fit">Book Now</button>
                         </div>
                         <a href="#slideF3" className="btn btn-ghost text-white text-4xl">❯</a>
                     </div>
@@ -48,8 +48,8 @@ const FeaturedRooms = () => {
                     <div className="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2 items-center">
                         <a href="#slideF2" className="btn btn-ghost text-4xl">❮</a>
                         <div className="flex flex-col justify-center items-center gap-5">
-                            <p className="lg:text-2xl w-1/2 mx-auto text-center text-white bg-[#0000005a] p-2 lg:p-8 rounded-xl">{featured[2]?.description}</p>
-                            <button className="btn btn-ghost btn-lg outline-double outline-primary text-secondary w-fit">Book Now</button>
+                            <p className="lg:text-2xl md:w-1/2  mx-auto text-center text-white bg-[#0000005a] p-2 lg:p-8 rounded-xl">{featured[2]?.description}</p>
+                            <button className="btn btn-ghost lg:btn-lg outline-double outline-primary text-secondary w-fit">Book Now</button>
                         </div>
                         <a href="#slideF4" className="btn btn-ghost text-4xl">❯</a>
                     </div>
@@ -59,8 +59,8 @@ const FeaturedRooms = () => {
                     <div className="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2 items-center">
                         <a href="#slideF3" className="btn btn-ghost text-white text-4xl">❮</a>
                         <div className="flex flex-col justify-center items-center gap-5">
-                            <p className="lg:text-2xl w-1/2 mx-auto text-center text-white bg-[#0000005a] p-2 lg:p-8 rounded-xl">{featured[3]?.description}</p>
-                            <button className="btn btn-ghost btn-lg outline-double outline-primary text-secondary w-fit">Book Now</button>
+                            <p className="lg:text-2xl md:w-1/2 mx-auto text-center text-white bg-[#0000005a] p-2 lg:p-8 rounded-xl">{featured[3]?.description}</p>
+                            <button className="btn btn-ghost lg:btn-lg outline-double outline-primary text-secondary w-fit">Book Now</button>
                         </div>
                         <a href="#slideF1" className="btn btn-ghost text-white text-4xl">❯</a>
                     </div>
