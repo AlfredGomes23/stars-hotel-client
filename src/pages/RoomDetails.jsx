@@ -3,6 +3,7 @@ import { Helmet } from "react-helmet-async";
 import { useParams } from 'react-router-dom';
 import useMyContext from "../hooks/useMyContext";
 import toast from "react-hot-toast";
+import useAxiosPublic from "../hooks/useAxiosPublic";
 
 const RoomDetails = () => {
     const { user } = useMyContext();
@@ -10,15 +11,25 @@ const RoomDetails = () => {
     const [room, setRoom] = useState({});
     const [coming, setComing] = useState(true);
     const { type, img, price, reviews, description, discount, availability, room_size } = room;
+    const axiosPublic = useAxiosPublic();
 
     useEffect(() => {
-        fetch(`http://localhost:5000/rooms/${id}`)
-            .then(resp => resp.json())
-            .then(data => {
-                setRoom(data);
-                setComing(false);
-            })
-    }, [id]);
+        // fetch(`http://localhost:5000/rooms/${id}`)
+        //     .then(resp => resp.json())
+        //     .then(data => {
+        //         setRoom(data);
+        //         setComing(false);
+        //     })
+
+        const f = async () => {
+            const { data } = await axiosPublic.get(`/rooms/${id}`);
+            // console.log(data);
+            setRoom(data);
+            setComing(false);
+        };
+        f();
+
+    }, [id, axiosPublic]);
     const handleSubmit = e => {
         e.preventDefault();
 
@@ -32,18 +43,26 @@ const RoomDetails = () => {
         const b_price = discount || price;
         const booking = {
             email, roomId: id, date, price: b_price, description, img, type
-        }
-        fetch('http://localhost:5000/bookings', {
-            method: "POST",
-            headers: {
-                "content-type": "application/json"
-            },
-            body: JSON.stringify(booking)
-        }).then(res => res.json())
+        };
+        // fetch('http://localhost:5000/bookings', {
+        //     method: "POST",
+        //     headers: {
+        //         "content-type": "application/json"
+        //     },
+        //     body: JSON.stringify(booking)
+        // }).then(res => res.json())
+        // .then(data => {
+        //     console.log(data);
+        //     if (data?.insertedId) toast.success('Room Booked.');
+        // });
+
+
+        axiosPublic.post('/bookings', booking)
             .then(data => {
-                console.log(data);
-                if (data?.insertedId) toast.success('Room Booked.');
+                console.log(data.data);
+                if (data?.data?.insertedId) toast.success('Room Booked.');
             });
+
     };
 
     //loading data
@@ -100,7 +119,7 @@ const RoomDetails = () => {
                                 <div className="form-control">
                                     <label className="input-group input-group-vertical w-80">
                                         <span>Your Email</span>
-                                        <input type="email" name="email" defaultValue={user?.email} className="input input-bordered" disabled />
+                                        <input type="email" name="email" defaultValue={user?.email} className="input input-bordered" />
                                     </label>
                                 </div>
                                 <div className="form-control">

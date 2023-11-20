@@ -1,20 +1,32 @@
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { useEffect, useState } from 'react';
+import useAxiosPublic from '../hooks/useAxiosPublic';
 
 
 const Banner = () => {
     // const [featured, setFeatured] = useState([]);
     const [discounts, setDiscounts] = useState([]);
+    const axiosPublic = useAxiosPublic();
+
     useEffect(() => {
         AOS.init({
             duration: 400
         });
+
         //getting discounts
-        fetch('http://localhost:5000/discounts')
-            .then(resp => resp.json())
-            .then(data => setDiscounts(data));
-    }, []);
+        // fetch('http://localhost:5000/discounts')
+        //     .then(resp => resp.json())
+        //     .then(data => setDiscounts(data));
+
+        const f = async() => {
+            const {data} = await axiosPublic.get('/discounts');
+            // console.log(data);
+            setDiscounts(data)
+        };
+        f();
+
+    }, [axiosPublic]);
     return (
         <div className='grid grid-cols-1 lg:grid-cols-2'>
             {/* text */}
@@ -34,7 +46,7 @@ const Banner = () => {
                                 <a href="#slide4" className="btn btn-ghost text-4xl">❮</a>
                                 <div className="lg:text-3xl w-1/2 mx-auto text-center bg-[#0000005a] p-2 lg:p-8 rounded-xl">
                                     <p className='text-accent'>{discounts[0]?.caption}</p>
-                                    <p className='text-secondary font-bold text-4xl'>$ {discounts[0] ?.discount}</p>
+                                    <p className='text-secondary font-bold text-4xl'>$ {discounts[0]?.discount}</p>
                                     <button className="btn btn-primary  w-fit">Book Now</button>
                                 </div>
                                 <a href="#slide2" className="btn btn-ghost text-4xl">❯</a>

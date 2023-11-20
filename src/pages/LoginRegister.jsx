@@ -78,6 +78,7 @@ const LoginRegister = () => {
                 toast.error(err.message);
             })
     };
+
     const googleLogin = () => {
         signInByGoogle()
             .then(() => {
@@ -110,9 +111,12 @@ const LoginRegister = () => {
                 <Helmet>
                     <title>Login-Register</title>
                 </Helmet>
-            <div className="flex flex-col md:flex-row bg-gradient-to-r from-accent to-primary">
+            <div className="flex flex-col lg:flex-row bg-gradient-to-r from-accent to-primary">
+            <div>
+                <Link to='/' className='pb-5'><p className='btn btn-ghost text-5xl'><FcHome></FcHome></p></Link>
+            </div>
                 {/* login */}
-                <div className="hero min-h-screen p-5 " data-aos="slide-left">
+                <div className="hero min-h-screen mb-10" data-aos="slide-left">
                     <div className="hero-content flex-col">
                         <div className="text-center lg:text-left">
                             <p className="font-bold">Have an account?</p>
@@ -137,7 +141,7 @@ const LoginRegister = () => {
                                         <a href="#" className="label-text-alt link link-hover link-primary underline">Forgot password?</a>
                                     </label>
                                 </div>
-                                <div className="form-control mt-6">
+                                <div className="form-control">
                                     <button className="btn btn-accent w-fit mx-auto">Login</button>
                                 </div>
                             </form>
@@ -149,7 +153,7 @@ const LoginRegister = () => {
                     </div>
                 </div>
                 {/* register */}
-                <div className="hero min-h-screen" data-aos="slide-right">
+                <div className="hero min-h-screen mb-10" data-aos="slide-right">
                     <div className="hero-content flex-col">
                         <div className="text-center lg:text-left text-neutral-content">
                             <p className="font-bold">New here?</p>
@@ -206,9 +210,6 @@ const LoginRegister = () => {
                         </div>
                     </div>
                 </div>
-            </div>
-            <div className="btm-nav bg-gradient-to-r from-accent to-primary">
-                <Link to='/' className='pb-10'><p className='btn btn-ghost text-5xl'><FcHome></FcHome></p></Link>
             </div>
         </div>
     );

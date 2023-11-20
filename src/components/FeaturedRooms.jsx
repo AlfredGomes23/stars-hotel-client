@@ -1,19 +1,28 @@
 import { useEffect, useState } from "react";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import useAxiosPublic from "../hooks/useAxiosPublic";
 
 const FeaturedRooms = () => {
     const [featured, setFeatured] = useState([]);
+    const axiosPublic = useAxiosPublic();
 
     useEffect(() => {
         AOS.init({
             duration: 400
         });
         //getting featured rooms
-        fetch('http://localhost:5000/featured')
-            .then(resp => resp.json())
-            .then(data => setFeatured(data))
-    }, []);
+        // fetch('http://localhost:5000/featured')
+        //     .then(resp => resp.json())
+        //     .then(data => setFeatured(data))
+
+        const f = async () => {
+            const { data } = await axiosPublic.get('/discounts');
+            // console.log(data);
+            setFeatured(data)
+        };
+        f();
+    }, [axiosPublic]);
     useEffect(() => {
 
     }, []);

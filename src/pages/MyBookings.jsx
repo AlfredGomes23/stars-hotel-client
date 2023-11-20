@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import useMyContext from "../hooks/useMyContext";
 import toast from "react-hot-toast";
 import swal from 'sweetalert';
+import useAxiosPublic from "../hooks/useAxiosPublic";
 
 //get today's date
 function getDate() {
@@ -28,15 +29,24 @@ const MyBookings = () => {
     const { user } = useMyContext();
     const [bookings, setBookings] = useState();
     const [coming, setComing] = useState(true);
+    const axiosPublic = useAxiosPublic();
 
     useEffect(() => {
-        fetch(`http://localhost:5000/bookings?email=${user?.email}`)
-            .then(resp => resp.json())
-            .then(data => {
-                setBookings(data);
-                setComing(false);
-            });
-    }, [user]);
+        // fetch(`http://localhost:5000/bookings?email=${user?.email}`)
+        //     .then(resp => resp.json())
+        //     .then(data => {
+        //         setBookings(data);
+        //         setComing(false);
+        //     });
+
+        const f = async () => {
+            const { data } = await axiosPublic.get(`/bookings?email=${user?.email}`);
+            // console.log(data);
+            setBookings(data);
+            setComing(false);
+        }; f();
+
+    }, [user, axiosPublic]);
 
     const handleUpdate = () => {
         //
@@ -54,20 +64,34 @@ const MyBookings = () => {
                     //checking cancellation time overed or not
                     if (dateDiff(date) > 1) { //not overed
                         // cancel booking
-                        fetch(`http://localhost:5000/bookings/${id}`, {
-                            method: "DELETE"
-                        })
-                            .then(resp => resp.json())
+                        
+                        // fetch(`http://localhost:5000/bookings/${id}`, {
+                        //     method: "DELETE"
+                        // })
+                        //     .then(resp => resp.json())
+                        //     .then(data => {
+                        //         console.log(data);
+                        //         if (data.deletedCount) toast.success("Booking Canceled.");
+
+                        //         //update bookings in website
+                        //         const remaining = bookings.filter(booking => booking._id !== id);
+                        //         setBookings(remaining);
+                        //     });
+
+                        axiosPublic.delete(`bookings/${id}`)
                             .then(data => {
-                                console.log(data);
-                                if (data.deletedCount) toast.success("Booking Canceled.");
+                                console.log(data?.data);
+                                if (data?.data.deletedCount) toast.success("Booking Canceled.");
 
                                 //update bookings in website
                                 const remaining = bookings.filter(booking => booking._id !== id);
                                 setBookings(remaining);
-                            })
-                            //time overed
-                    }else toast.error("Booking Cancellation Time Overed.");
+                            });
+
+
+
+                        //time overed
+                    } else toast.error("Booking Cancellation Time Overed.");
                 }
             }
             // else {
