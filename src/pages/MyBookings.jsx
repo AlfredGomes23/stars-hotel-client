@@ -32,16 +32,9 @@ const MyBookings = () => {
     const axiosPublic = useAxiosPublic();
 
     useEffect(() => {
-        // fetch(`http://localhost:5000/bookings?email=${user?.email}`)
-        //     .then(resp => resp.json())
-        //     .then(data => {
-        //         setBookings(data);
-        //         setComing(false);
-        //     });
 
         const f = async () => {
             const { data } = await axiosPublic.get(`/bookings?email=${user?.email}`);
-            // console.log(data);
             setBookings(data);
             setComing(false);
         }; f();
@@ -64,20 +57,6 @@ const MyBookings = () => {
                     //checking cancellation time overed or not
                     if (dateDiff(date) > 1) { //not overed
                         // cancel booking
-                        
-                        // fetch(`http://localhost:5000/bookings/${id}`, {
-                        //     method: "DELETE"
-                        // })
-                        //     .then(resp => resp.json())
-                        //     .then(data => {
-                        //         console.log(data);
-                        //         if (data.deletedCount) toast.success("Booking Canceled.");
-
-                        //         //update bookings in website
-                        //         const remaining = bookings.filter(booking => booking._id !== id);
-                        //         setBookings(remaining);
-                        //     });
-
                         axiosPublic.delete(`bookings/${id}`)
                             .then(data => {
                                 console.log(data?.data);
@@ -87,16 +66,10 @@ const MyBookings = () => {
                                 const remaining = bookings.filter(booking => booking._id !== id);
                                 setBookings(remaining);
                             });
-
-
-
                         //time overed
                     } else toast.error("Booking Cancellation Time Overed.");
                 }
             }
-            // else {
-            //     toast.success("Exit Cancellation.");
-            // }
         });
 
     }
@@ -104,7 +77,7 @@ const MyBookings = () => {
     //loading
     if (coming) return <span className="loading loading-bars loading-lg flex justify-center items-center mx-auto"></span>;
     // no bookings
-    if (bookings.length === 0) return <p className="text-center text-secondary text-2xl">No Booking</p>;
+    if (bookings?.length === 0) return <p className="text-center text-secondary text-2xl">No Booking</p>;
 
 
     return (
@@ -112,7 +85,7 @@ const MyBookings = () => {
             <Helmet>
                 <title>My Bookings</title>
             </Helmet>
-            <h1 className="text-4xl my-10 underline">My Bookings</h1>
+            <h1 className="text-4xl my-10 underline">My Bookings: {bookings?.length}</h1>
             <div>{
                 bookings?.map(booking => <BookingCard key={booking._id} booking={booking} handleDelete={handleDelete} handleUpdate={handleUpdate}></BookingCard>)
             }</div>

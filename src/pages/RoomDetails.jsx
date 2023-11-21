@@ -5,10 +5,31 @@ import useMyContext from "../hooks/useMyContext";
 import toast from "react-hot-toast";
 import useAxiosPublic from "../hooks/useAxiosPublic";
 
+
+//get today's date
+function getDate() {
+    const today = new Date();
+    const month = today.getMonth() + 1;
+    const year = today.getFullYear();
+    const date = today.getDate();
+    return `${year}-${month}-${date}`;
+}
+//date difference ( booking date to today)
+const dateDiff = (b_date) => {
+    //get date in ms
+    const date1 = new Date(getDate());
+    const date2 = new Date(b_date);
+    const timeDifference = date2 - date1; // Difference in milliseconds
+
+    const daysDifference = timeDifference / (1000 * 60 * 60 * 24); // Convert to days
+    return parseInt(daysDifference);
+}
+
 const RoomDetails = () => {
     const { user } = useMyContext();
     const { id } = useParams();
     const [room, setRoom] = useState({});
+    const [checking, setChecking] = useState(false);
     const [coming, setComing] = useState(true);
     const { type, img, price, reviews, description, discount, availability, room_size } = room;
     const axiosPublic = useAxiosPublic();
@@ -30,14 +51,23 @@ const RoomDetails = () => {
         f();
 
     }, [id, axiosPublic]);
+
+
     const handleSubmit = e => {
         e.preventDefault();
+        setChecking(true);
 
         const from = e.target;
 
         const email = from.email.value;
         const date = from.date.value;
-        console.log(email, date);
+        // console.log(email, date);
+
+        //check past date
+        if (dateDiff(date) < 1) {
+            setChecking(false);
+            return toast.error("Can Not Book For Selected Date.");
+        }
 
         //book room
         const b_price = discount || price;
@@ -61,6 +91,9 @@ const RoomDetails = () => {
             .then(data => {
                 console.log(data.data);
                 if (data?.data?.insertedId) toast.success('Room Booked.');
+                else if (data?.data?.unavailable) toast.error("Not Available For selected Date");
+                else toast.error("Error.");
+                setChecking(false)
             });
 
     };
@@ -119,7 +152,7 @@ const RoomDetails = () => {
                                 <div className="form-control">
                                     <label className="input-group input-group-vertical w-80">
                                         <span>Your Email</span>
-                                        <input type="email" name="email" defaultValue={user?.email} className="input input-bordered" />
+                                        <input type="email" name="email" defaultValue={user?.email} className="input input-bordered" disabled />
                                     </label>
                                 </div>
                                 <div className="form-control">
@@ -130,7 +163,8 @@ const RoomDetails = () => {
                                 </div>
                             </div>
                             <div className="form-control mt-6">
-                                <button className="btn btn-secondary w-fit mx-auto">Book</button>
+                                {checking ? <button><span className="loading loading-spinner loading-lg text-secondary"></span></button>
+                                    : <button className="btn btn-secondary w-fit mx-auto">Book</button>}
                             </div>
                         </form>
                     </div>

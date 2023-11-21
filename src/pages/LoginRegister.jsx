@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { FcGoogle, FcHome } from "react-icons/fc";
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import useMyContext from '../hooks/useMyContext';
-import toast from 'react-hot-toast';
+import toast, { Toaster } from 'react-hot-toast';
 import { Helmet } from "react-helmet-async";
 
 const LoginRegister = () => {
@@ -102,12 +102,12 @@ const LoginRegister = () => {
 
     return (
         <div>
-            {/* <div>
+            <div>
                 <Toaster
                     position="top-center"
                     reverseOrder={true}
                 />
-            </div> */}
+            </div>
                 <Helmet>
                     <title>Login-Register</title>
                 </Helmet>
