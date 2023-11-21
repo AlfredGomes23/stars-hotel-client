@@ -11,7 +11,7 @@ const Footer = () => {
     }, []);
     return (
         <footer>
-            <div className="footer p-10 bg-base-300 mb-1 rounded-lg shadow-sm flex flex-col md:flex-row justify-center items-center" data-aos="slide-up">
+            <div className="footer p-5 bg-base-300 mb-1 rounded-lg shadow-sm flex flex-col md:flex-row justify-center items-center" data-aos="slide-up">
                 <aside className="mx-auto text-center">
                     <img className="w-24 mx-auto" src="https://i.ibb.co/BBDQrqN/logo.png" alt="" />
                     <p>Stars Hotel Ltd.<br />Providing reliable service since 1992</p>
@@ -24,7 +24,7 @@ const Footer = () => {
                     <Link to="/faq">FAQ</Link>
                 </div>
             </div>
-            <div className="footer footer-center p-4 bg-base-300 text-base-content rounded-lg shadow-md mb-3">
+            <div className="footer footer-center p-1 bg-base-300 text-base-content rounded-lg shadow-md mb-3">
                 <aside>
                     <p>Copyright © 2023 - All right reserved by Stars Hotel Ltd.</p>
                 </aside>
