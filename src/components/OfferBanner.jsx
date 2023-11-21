@@ -31,7 +31,7 @@ const OfferBanner = () => {
             <Carousel autoPlay={true} infiniteLoop={true} className='h-fit px-2 md:p-0'>
                 {
                     discounts?.map(room => <div key={room?._id} className=''>
-                        <img src={room?.img} alt={room?.name} className='rounded-lg overflow-hidden h-64 md:h-80 lg:h-96 cover text-white' />
+                        <img src={room?.img} alt={room?.type} className='rounded-lg overflow-hidden h-64 md:h-80 lg:h-96 cover text-white' />
                         <div className="myLegend w-2/3 h-fit space-y-3">
                             <p className=' text-xl md:text-2xl w-48'>{room?.caption}</p>
                             <p className=' font-bold md:text-4xl'>$ {room?.discount}</p>
