@@ -11,13 +11,9 @@ const FeaturedRooms = () => {
         AOS.init({
             duration: 400
         });
-        //getting featured rooms
-        // fetch('http://localhost:5000/featured')
-        //     .then(resp => resp.json())
-        //     .then(data => setFeatured(data))
 
         const f = async () => {
-            const { data } = await axiosPublic.get('/discounts');
+            const { data } = await axiosPublic.get('/featured');
             // console.log(data);
             setFeatured(data)
         };
