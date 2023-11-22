@@ -24,7 +24,7 @@ const FeaturedRooms = () => {
 
     }, []);
     return (
-        <div className=" mx-auto mb-5" data-aos="flip-up">
+        <div className=" mx-auto mb-5" data-aos="fade-out">
             <h1 className="text-2xl lg:text-5xl font-bold text-center mb-5">Our Featured Rooms</h1>
             {/* cards */}
             <Carousel autoPlay={true} infiniteLoop={true} className='h-fit mx-2 lg:mx-0'>

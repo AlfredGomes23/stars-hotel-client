@@ -1,6 +1,8 @@
 /* eslint-disable react/prop-types */
 
-const BookingCard = ({ booking, handleDelete, handleUpdate }) => {
+import { Link } from "react-router-dom";
+
+const BookingCard = ({ booking, handleDelete }) => {
     const { _id, type, img, date, price, description } = booking;
     
     return (
@@ -12,7 +14,7 @@ const BookingCard = ({ booking, handleDelete, handleUpdate }) => {
                 <p className="text-2xl">Booking Date: {date}</p>
                 <p className="text-2xl">Price: {price}</p>
                 <div className="card-actions justify-end">
-                    <button onClick={()=>handleUpdate(_id, date)} className="btn btn-warning btn-xs sm:btn-sm md:btn-md">Update</button>
+                    <Link to={`/update/${_id}`} className="btn btn-warning btn-xs sm:btn-sm md:btn-md">Update</Link>
                     <button onClick={()=>handleDelete(_id, date)} className="btn btn-error btn-xs sm:btn-sm md:btn-md">Delete</button>
                 </div>
             </div>

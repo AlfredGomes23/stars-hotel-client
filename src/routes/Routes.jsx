@@ -10,6 +10,7 @@ import LoginRegister from '../pages/LoginRegister';
 import Profile from '../pages/Profile.jsx';
 import PrivateRoutes from './PrivateRoutes';
 import RoomDetails from '../pages/RoomDetails.jsx';
+import UpdateBooking from '../pages/UpdateBooking.jsx';
 
 const routes = createBrowserRouter([
     {
@@ -35,6 +36,12 @@ const routes = createBrowserRouter([
                 path: 'my-bookings',
                 element: <PrivateRoutes>
                     <MyBookings></MyBookings>
+                </PrivateRoutes>
+            },
+            {
+                path: 'update/:id',
+                element: <PrivateRoutes>
+                    <UpdateBooking></UpdateBooking>
                 </PrivateRoutes>
             },
             {

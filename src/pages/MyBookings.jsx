@@ -41,9 +41,7 @@ const MyBookings = () => {
 
     }, [user, axiosPublic]);
 
-    const handleUpdate = () => {
-        //
-    };
+    
     const handleDelete = (id, date) => {
         swal({//Confirming to cancel
             title: "Are you sure?",
@@ -51,6 +49,7 @@ const MyBookings = () => {
             icon: "warning",
             buttons: true,
             dangerMode: true,
+            timer: 1500
         }).then((willDelete) => {
             if (willDelete) {
                 if (willDelete) {
@@ -59,7 +58,7 @@ const MyBookings = () => {
                         // cancel booking
                         axiosPublic.delete(`bookings/${id}`)
                             .then(data => {
-                                console.log(data?.data);
+                                // console.log(data?.data);
                                 if (data?.data.deletedCount) toast.success("Booking Canceled.");
 
                                 //update bookings in website
@@ -76,6 +75,7 @@ const MyBookings = () => {
 
     //loading
     if (coming) return <span className="loading loading-bars loading-lg flex justify-center items-center mx-auto"></span>;
+    
     // no bookings
     if (bookings?.length === 0) return <p className="text-center text-secondary text-2xl">No Booking</p>;
 
@@ -87,7 +87,7 @@ const MyBookings = () => {
             </Helmet>
             <h1 className="text-4xl my-10 underline">My Bookings: {bookings?.length}</h1>
             <div>{
-                bookings?.map(booking => <BookingCard key={booking._id} booking={booking} handleDelete={handleDelete} handleUpdate={handleUpdate}></BookingCard>)
+                bookings?.map(booking => <BookingCard key={booking._id} booking={booking} handleDelete={handleDelete}></BookingCard>)
             }</div>
         </div>
     );
