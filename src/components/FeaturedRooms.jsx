@@ -3,6 +3,7 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 import useAxiosPublic from "../hooks/useAxiosPublic";
 import { Carousel } from "react-responsive-carousel";
+import { Link } from "react-router-dom";
 
 const FeaturedRooms = () => {
     const [featured, setFeatured] = useState([]);
@@ -34,7 +35,7 @@ const FeaturedRooms = () => {
                         <div className="inset-0 m-auto absolute md:w-1/2 rounded-lg overflow-hidden bg-[#0000007a] p-3 md:p-5 lg:p-10 text-center text-white h-fit space-y-3">
                             <p className=' text-xl md:text-2xl'>{room?.type}</p>
                             <p>{room?.description}</p>
-                            <button className="btn btn-accent btn-sm w-fit">Book Now</button>
+                            <Link to={`/rooms/${room?._id}`} className="btn btn-accent btn-sm w-fit">Book Now</Link>
                         </div>
                     </div>)
                 }

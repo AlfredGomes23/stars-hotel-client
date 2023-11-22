@@ -5,6 +5,7 @@ import useAxiosPublic from '../hooks/useAxiosPublic';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from 'react-responsive-carousel';
 import './OfferBanner.css';
+import { Link } from 'react-router-dom';
 
 
 const OfferBanner = () => {
@@ -35,7 +36,7 @@ const OfferBanner = () => {
                         <div className="myLegend w-2/3 h-fit space-y-3">
                             <p className=' text-xl md:text-2xl w-48'>{room?.caption}</p>
                             <p className=' font-bold md:text-4xl'>$ {room?.discount}</p>
-                            <button className="btn btn-secondary btn-sm md:btn-md w-fit">Book Now</button>
+                            <Link to={`/rooms/${room?._id}`} className="btn btn-secondary btn-sm md:btn-md w-fit">Book Now</Link>
                         </div>
                     </div>)
                 }
