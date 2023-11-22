@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import toast from "react-hot-toast";
 import useAxiosPublic from "../hooks/useAxiosPublic";
 import swal from 'sweetalert';
+import useSecureAxios from "../hooks/useSecureAxios";
 
 
 //get today's date
@@ -32,6 +33,7 @@ const UpdateBooking = () => {
     const [update, setUpdate] = useState(false);
     const [coming, setComing] = useState(true);
     const axiosPublic = useAxiosPublic();
+    const axiosSecure = useSecureAxios();
 
     useEffect(() => {
 
@@ -51,11 +53,11 @@ const UpdateBooking = () => {
 
         const newDate = e.target.date.value;
 
+        //same date
         if(newDate === booking.date){
             setChecking(false);
             return toast.error(`Already Booked for This Date`);
         }
-
         //check past date
         if (dateDiff(newDate) < 1) {
             setChecking(false);
@@ -64,7 +66,7 @@ const UpdateBooking = () => {
         // confirm update
         swal({
             title: "Are you sure?",
-            text: `Update Booking Date From ${booking?.date} To ${newDate}`,
+            text: `Update Booking Date To ${newDate}`,
             icon: "warning",
             buttons: true,
             dangerMode: true,
@@ -72,7 +74,7 @@ const UpdateBooking = () => {
             .then((willDelete) => {
                 if (willDelete) {
                     //patch
-                    axiosPublic.patch(`/update/${b_id}`, { newDate, roomId: booking?.roomId })
+                    axiosSecure.patch(`/update/${b_id}`, { newDate, roomId: booking?.roomId })
                         .then(data => {
                             // console.log(data?.data);
                             if (data?.data?.modifiedCount) {

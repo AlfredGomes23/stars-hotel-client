@@ -5,6 +5,9 @@ import useMyContext from "../hooks/useMyContext";
 import toast from "react-hot-toast";
 import useAxiosPublic from "../hooks/useAxiosPublic";
 import swal from 'sweetalert';
+import useSecureAxios from "../hooks/useSecureAxios";
+import Timestamp from 'react-timestamp';
+import moment from 'moment';
 
 
 //get today's date
@@ -34,6 +37,7 @@ const RoomDetails = () => {
     const [coming, setComing] = useState(true);
     const { type, img, price, reviews, description, discount, availability, room_size } = room;
     const axiosPublic = useAxiosPublic();
+    const axiosSecure = useSecureAxios();
 
     useEffect(() => {
 
@@ -79,7 +83,7 @@ const RoomDetails = () => {
                     const booking = {
                         email, roomId: id, date, price: b_price, description, img, type
                     };
-                    axiosPublic.post('/bookings', booking)
+                    axiosSecure.post('/bookings', booking)
                         .then(data => {
                             console.log(data.data);
                             if (data?.data?.insertedId) toast.success('Room Booked.');
@@ -92,6 +96,22 @@ const RoomDetails = () => {
         setChecking(false);
 
     };
+    const handleReview = e => {
+        e.preventDefault();
+
+        const utcDate = moment.utc().format();
+        const comment = e.target.comment.value;
+        const rating = e.target.rating.value;
+        
+        const review = { email: user?.email, comment, rating, date: utcDate};
+        console.log(review);
+
+        //post review
+        axiosPublic.post(`/review/${id}`, review)
+        .then(res => {
+            console.log(res);
+        })
+    }
 
     //loading data
     if (coming) return <span className="loading loading-bars loading-lg flex justify-center items-center mx-auto"></span>;
@@ -114,12 +134,22 @@ const RoomDetails = () => {
                     <p className="text-xl text-center md:text-start">Room Size: {room_size}</p>
                     <p className="text-2xl underline">Details: </p>
                     <p className="text-xl">{description}</p>
+                </div>
+                {/* img half */}
+                <div className="flex-1">
+                    <img className="rounded-lg" src={img} alt="" />
+                </div>
+            </div>
+
+            <div className="flex">
+                {/* reviews */}
+                <div className="w-2/5">
                     <div className="text-xl mt-5">
                         <p className="underline">Reviews: {reviews.length}</p>
                         {
                             reviews.length !== 0 ? <div>
                                 {
-                                    reviews?.map((idx, review) => <div key={idx}>
+                                    reviews?.map((review, idx) => <div key={idx}>
                                         <h3 className="text-xl">User: {review?.email}</h3>
                                         <h5 className="text-xl">Rating: {review?.rating}</h5>
                                         <p className="text-lg">Review: {review.comment}</p>
@@ -129,39 +159,49 @@ const RoomDetails = () => {
                             </div> : <p className="text-secondary">No one reviewed.</p>
                         }
                     </div>
-                </div>
-                {/* img half */}
-                <div className="flex-1">
-                    <img className="rounded-lg" src={img} alt="" />
-                </div>
-            </div>
-            {/* booking */}
-            <div className="hero bg-base-100">
-                <div className="hero-content flex-col">
-                    <div className="card flex-shrink-0 w-full shadow-2xl bg-base-200">
-                        <div className="lg:text-left">
-                            <h1 className="text-center text-5xl font-bold">Book now!</h1>
+                    {/* add review */}
+                    <form onSubmit={handleReview} className="join">
+                        <textarea className="textarea textarea-primary" name="comment" placeholder="your review..." rows='4' required></textarea>
+                        <div className="flex flex-col gap-5 ml-5">
+                            <select className="select select-bordered join-item textarea-primary" name="rating" defaultValue="5">
+                                <option value='1'>1</option>
+                                <option value='2'>2</option>
+                                <option value='3'>3</option>
+                                <option value='4'>4</option>
+                                <option value='5'>5</option>
+                            </select>
+                            <button className="btn btn-primary">Submit</button>
                         </div>
-                        <form onSubmit={handleSubmit} className="card-body">
-                            <div className="flex gap-5">
-                                <div className="form-control">
-                                    <label className="input-group input-group-vertical w-80">
-                                        <span>Your Email</span>
-                                        <input type="email" name="email" defaultValue={user?.email} className="input input-bordered" disabled />
-                                    </label>
-                                </div>
-                                <div className="form-control">
-                                    <label className="input-group input-group-vertical w-80">
-                                        <span>Date</span>
-                                        <input type="date" name="date" className="input input-bordered" required />
-                                    </label>
-                                </div>
+                    </form>
+                </div>
+                {/* booking */}
+                <div className="bg-base-100 w-3/5">
+                    <div className="flex-col">
+                        <div className="card flex-shrink-0 w-full shadow-2xl bg-base-200">
+                            <div className="lg:text-left">
+                                <h1 className="text-center text-5xl font-bold">Book now!</h1>
                             </div>
-                            <div className="form-control mt-6">
-                                {checking ? <button><span className="loading loading-spinner loading-lg text-secondary"></span></button>
-                                    : <button className="btn btn-secondary w-fit mx-auto">Book</button>}
-                            </div>
-                        </form>
+                            <form onSubmit={handleSubmit} className="card-body">
+                                <div className="flex gap-5">
+                                    <div className="form-control">
+                                        <label className="input-group input-group-vertical w-80">
+                                            <span>Your Email</span>
+                                            <input type="email" name="email" defaultValue={user?.email} className="input input-bordered" disabled />
+                                        </label>
+                                    </div>
+                                    <div className="form-control">
+                                        <label className="input-group input-group-vertical w-80">
+                                            <span>Date</span>
+                                            <input type="date" name="date" className="input input-bordered" required />
+                                        </label>
+                                    </div>
+                                </div>
+                                <div className="form-control mt-6">
+                                    {checking ? <button><span className="loading loading-spinner loading-lg text-secondary"></span></button>
+                                        : <button className="btn btn-secondary w-fit mx-auto">Book</button>}
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
