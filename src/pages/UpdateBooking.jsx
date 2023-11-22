@@ -3,6 +3,7 @@ import { Helmet } from "react-helmet-async";
 import { useParams } from 'react-router-dom';
 import toast from "react-hot-toast";
 import useAxiosPublic from "../hooks/useAxiosPublic";
+import swal from 'sweetalert';
 
 
 //get today's date
@@ -28,6 +29,7 @@ const UpdateBooking = () => {
     const { id: b_id } = useParams();
     const [booking, setBooking] = useState({});
     const [checking, setChecking] = useState(false);
+    const [update, setUpdate] = useState(false);
     const [coming, setComing] = useState(true);
     const axiosPublic = useAxiosPublic();
 
@@ -38,10 +40,9 @@ const UpdateBooking = () => {
             // console.log(data);
             setBooking(data);
             setComing(false);
-        };
-        f();
-
-    }, [b_id, axiosPublic]);
+            setUpdate(false)
+        }; f();
+    }, [b_id, axiosPublic, update]);
 
 
     const handleSubmit = e => {
@@ -55,16 +56,32 @@ const UpdateBooking = () => {
             setChecking(false);
             return toast.error("Can Not Book For Selected Date.");
         }
-        //patch for update
-        axiosPublic.patch(`/update/${b_id}`, { newDate, roomId: booking?.roomId })
-            .then(data => {
-                // console.log(data?.data);
-                if (data?.data?.modifiedCount) toast.success('booking Updated.');
-                else if (data?.data?.unavailable) toast.error("Not Available For selected Date");
-                else toast.error("Error.");
-                setChecking(false);
+        // confirm update
+        swal({
+            title: "Are you sure?",
+            text: `Update Booking Date From ${booking?.date} To ${newDate}`,
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    //patch
+                    axiosPublic.patch(`/update/${b_id}`, { newDate, roomId: booking?.roomId })
+                        .then(data => {
+                            // console.log(data?.data);
+                            if (data?.data?.modifiedCount) {
+                                //update page data
+                                setUpdate(true);
+                                toast.success('Booking Updated.');
+                            }
+                            else if (data?.data?.unavailable) toast.error("Not Available For selected Date");
+                            else toast.error("Error.");
+                        });
+                }
             });
 
+        setChecking(false);
     };
 
     //loading data

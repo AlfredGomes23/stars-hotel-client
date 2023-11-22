@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import useMyContext from "../hooks/useMyContext";
 import toast from "react-hot-toast";
 import useAxiosPublic from "../hooks/useAxiosPublic";
+import swal from 'sweetalert';
 
 
 //get today's date
@@ -61,40 +62,40 @@ const RoomDetails = () => {
 
         const email = from.email.value;
         const date = from.date.value;
-        // console.log(email, date);
-
         //check past date
         if (dateDiff(date) < 1) {
             setChecking(false);
             return toast.error("Can Not Book For Selected Date.");
         }
-
-        //book room
-        const b_price = discount || price;
-        const booking = {
-            email, roomId: id, date, price: b_price, description, img, type
-        };
-        // fetch('http://localhost:5000/bookings', {
-        //     method: "POST",
-        //     headers: {
-        //         "content-type": "application/json"
-        //     },
-        //     body: JSON.stringify(booking)
-        // }).then(res => res.json())
-        // .then(data => {
-        //     console.log(data);
-        //     if (data?.insertedId) toast.success('Room Booked.');
-        // });
-
-
-        axiosPublic.post('/bookings', booking)
-            .then(data => {
-                console.log(data.data);
-                if (data?.data?.insertedId) toast.success('Room Booked.');
-                else if (data?.data?.unavailable) toast.error("Not Available For selected Date");
-                else toast.error("Error.");
-                setChecking(false)
+        //confirm booking
+        swal({
+            title: `You want to Book:
+            ${type},
+            Price: ${discount || price},
+            Date: ${date}?`,
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+            timer: 5000
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    //book room
+                    const b_price = discount || price;
+                    const booking = {
+                        email, roomId: id, date, price: b_price, description, img, type
+                    };
+                    axiosPublic.post('/bookings', booking)
+                        .then(data => {
+                            console.log(data.data);
+                            if (data?.data?.insertedId) toast.success('Room Booked.');
+                            else if (data?.data?.unavailable) toast.error("Not Available For selected Date");
+                            else toast.error("Error.");
+                        });
+                }
             });
+
+        setChecking(false);
 
     };
 
