@@ -22,7 +22,7 @@ const Error404 = () => {
                 <AiTwotoneHome className="text-xl"></AiTwotoneHome>
                 <button>Home</button>
             </Link>
-            <img className="lg:h-[50vh] mx-auto rounded-lg" src="https://i.ibb.co/Rvnr2Wb/error404.png" alt="" data-aos="slide-down" />
+            <img className="md:w-1/2 lg:w-1/3 mx-auto rounded-lg" src="https://i.ibb.co/Rvnr2Wb/error404.png" alt="" data-aos="slide-down" />
 
             <footer className="footer footer-center p-4 bg-base-300 text-base-content rounded-lg shadow-md mt-5 w-fit mx-auto mb-3" data-aos="slide-up">
                 <aside>

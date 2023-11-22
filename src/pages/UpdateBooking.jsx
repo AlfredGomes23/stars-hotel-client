@@ -51,10 +51,15 @@ const UpdateBooking = () => {
 
         const newDate = e.target.date.value;
 
+        if(newDate === booking.date){
+            setChecking(false);
+            return toast.error(`Already Booked for This Date`);
+        }
+
         //check past date
         if (dateDiff(newDate) < 1) {
             setChecking(false);
-            return toast.error("Can Not Book For Selected Date.");
+            return toast.error(`This room is Already Booked for ${newDate}`);
         }
         // confirm update
         swal({

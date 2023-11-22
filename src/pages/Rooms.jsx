@@ -14,13 +14,6 @@ const Rooms = () => {
         setComing(true);
     };
     useEffect(() => {
-        // fetch('http://localhost:5000/rooms')
-        //     .then(resp => resp.json())
-        //     .then(data => {
-        //         sort ? setRooms(data.sort((a, b) => a?.price - b?.price)):
-        //         setRooms(data);
-        //         setComing(false);
-        //     });
 
         const f = async () => {
             const { data } = await axiosPublic.get('/rooms');

@@ -36,12 +36,6 @@ const RoomDetails = () => {
     const axiosPublic = useAxiosPublic();
 
     useEffect(() => {
-        // fetch(`http://localhost:5000/rooms/${id}`)
-        //     .then(resp => resp.json())
-        //     .then(data => {
-        //         setRoom(data);
-        //         setComing(false);
-        //     })
 
         const f = async () => {
             const { data } = await axiosPublic.get(`/rooms/${id}`);
@@ -110,7 +104,7 @@ const RoomDetails = () => {
             {/* page contents */}
             <div className="flex flex-col lg:flex-row my-5 p-5">
                 {/* details half */}
-                <div className="flex-1 mb-5">
+                <div className="flex-1 mb-5 p-5">
                     <h1 className="text-4xl text-center md:text-start">{type}</h1>
                     <div className="flex flex-col md:flex-row md:gap-24 text-xl text-center md:text-start">
                         <p>Per day Price: ${price}</p>

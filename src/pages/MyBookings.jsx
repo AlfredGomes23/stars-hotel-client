@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import useMyContext from "../hooks/useMyContext";
 import toast from "react-hot-toast";
 import swal from 'sweetalert';
-import useAxiosPublic from "../hooks/useAxiosPublic";
+import useSecureAxios from "../hooks/useSecureAxios";
 
 //get today's date
 function getDate() {
@@ -29,19 +29,19 @@ const MyBookings = () => {
     const { user } = useMyContext();
     const [bookings, setBookings] = useState();
     const [coming, setComing] = useState(true);
-    const axiosPublic = useAxiosPublic();
+    const axiosSecure = useSecureAxios();
 
     useEffect(() => {
 
         const f = async () => {
-            const { data } = await axiosPublic.get(`/bookings?email=${user?.email}`);
+            const { data } = await axiosSecure.get(`/bookings?email=${user?.email}`);
             setBookings(data);
             setComing(false);
         }; f();
 
-    }, [user, axiosPublic]);
+    }, [user, axiosSecure]);
 
-    
+
     const handleDelete = (id, date) => {
         swal({//Confirming to cancel
             title: "Are you sure?",
@@ -56,7 +56,7 @@ const MyBookings = () => {
                     //checking cancellation time overed or not
                     if (dateDiff(date) > 1) { //not overed
                         // cancel booking
-                        axiosPublic.delete(`bookings/${id}`)
+                        axiosSecure.delete(`bookings/${id}`)
                             .then(data => {
                                 // console.log(data?.data);
                                 if (data?.data.deletedCount) toast.success("Booking Canceled.");
@@ -75,7 +75,7 @@ const MyBookings = () => {
 
     //loading
     if (coming) return <span className="loading loading-bars loading-lg flex justify-center items-center mx-auto"></span>;
-    
+
     // no bookings
     if (bookings?.length === 0) return <p className="text-center text-secondary text-2xl">No Booking</p>;
 

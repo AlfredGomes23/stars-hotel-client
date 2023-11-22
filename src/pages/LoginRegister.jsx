@@ -9,7 +9,6 @@ import { Helmet } from "react-helmet-async";
 
 const LoginRegister = () => {
     const {
-        // setUser,
         signUp,
         updateUser,
         signInByEmail,
@@ -102,19 +101,17 @@ const LoginRegister = () => {
 
     return (
         <div>
-            <div>
-                <Toaster
-                    position="top-center"
-                    reverseOrder={true}
-                />
-            </div>
-                <Helmet>
-                    <title>Login-Register</title>
-                </Helmet>
+            <Toaster
+                position="top-center"
+                reverseOrder={true}
+            />
+            <Helmet>
+                <title>Login-Register</title>
+            </Helmet>
             <div className="flex flex-col lg:flex-row bg-gradient-to-r from-accent to-primary">
-            <div>
-                <Link to='/' className='pb-5'><p className='btn btn-ghost text-5xl'><FcHome></FcHome></p></Link>
-            </div>
+                <div>
+                    <Link to='/' className='pb-5'><p className='btn btn-ghost text-5xl'><FcHome></FcHome></p></Link>
+                </div>
                 {/* login */}
                 <div className="hero min-h-screen mb-10" data-aos="slide-left">
                     <div className="hero-content flex-col">
