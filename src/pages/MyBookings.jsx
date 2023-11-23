@@ -79,7 +79,6 @@ const MyBookings = () => {
     // no bookings
     if (bookings?.length === 0) return <p className="text-center text-secondary text-2xl">No Booking</p>;
 
-
     return (
         <div>
             <Helmet>

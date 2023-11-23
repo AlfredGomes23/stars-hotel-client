@@ -26,7 +26,6 @@ const dateDiff = (b_date) => {
     const date1 = new Date(getDate());
     const date2 = new Date(b_date);
     const timeDifference = date2 - date1; // Difference in milliseconds
-
     const daysDifference = timeDifference / (1000 * 60 * 60 * 24); // Convert to days
     return parseInt(daysDifference);
 }
@@ -37,11 +36,19 @@ const RoomDetails = () => {
     const [room, setRoom] = useState({});
     const [checking, setChecking] = useState(false);
     const [coming, setComing] = useState(true);
-    const [reFetch, setReFetch] = useState(false);
-    // const [booked, setBooked] = useState(false);
+    const [booked, setBooked] = useState(false);
+    const [refetch, setRefetch] = useState(false);
     const { type, img, price, reviews, description, discount, availability, room_size } = room;
     const axiosPublic = useAxiosPublic();
     const axiosSecure = useSecureAxios();
+    // console.log(booked);
+
+    //check booked
+    const checkBooked = async () => {
+        const { data } = await axiosSecure.get(`/isBooked?email=${user?.email}&roomId=${id}`)
+        setBooked(data.isBooked);
+    };
+    coming && checkBooked();
 
     useEffect(() => {
         const f = async () => {
@@ -49,9 +56,9 @@ const RoomDetails = () => {
             // console.log(data);
             setRoom(data);
             setComing(false);
-            setReFetch(false)
+            setRefetch(false);
         }; f();
-    }, [id, axiosPublic, reFetch]);
+    }, [id, axiosPublic, refetch]);
 
 
     const handleSubmit = e => {
@@ -62,11 +69,13 @@ const RoomDetails = () => {
 
         const email = from.email.value;
         const date = from.date.value;
+
         //check past date
         if (dateDiff(date) < 1) {
             setChecking(false);
-            return toast.error("Can Not Book For Selected Date.");
+            return toast.error("Can Not Book For Past Date.");
         }
+
         //confirm booking
         swal({
             title: `You want to Book:
@@ -87,8 +96,11 @@ const RoomDetails = () => {
                     };
                     axiosSecure.post('/bookings', booking)
                         .then(data => {
-                            console.log(data.data);
-                            if (data?.data?.insertedId) toast.success('Room Booked.');
+                            // console.log(data.data);
+                            if (data?.data?.insertedId) {
+                                toast.success('Room Booked.');
+                                checkBooked();
+                            }
                             else if (data?.data?.unavailable) toast.error("Not Available For selected Date");
                             else toast.error("Error.");
                         });
@@ -100,24 +112,24 @@ const RoomDetails = () => {
     };
     const handleReview = e => {
         e.preventDefault();
-        //check booked
-        // if(!booked) return toast.error("You Can Post Review Only After Booking This Room.");
+
+        if (!booked) return toast.error("You Can Post Review Only After Booking This Room.");
 
         const utcDate = moment.utc().format();
         const comment = e.target.comment.value;
         const rating = e.target.rating.value;
 
         const review = { email: user?.email, comment, rating, date: utcDate };
-        console.log(review);
+        // console.log(review);
 
         //post review
         axiosSecure.post(`/review/${id}`, review)
             .then(res => {
                 if (res.data.modifiedCount) {
                     toast.success("Review Posted.");
-                    setReFetch(true);
+                    setRefetch(true);
                 }
-            })
+            });
     }
 
     //loading data
@@ -151,7 +163,7 @@ const RoomDetails = () => {
             <div className="flex flex-col lg:flex-row gap-5 items-center">
                 {/* reviews */}
                 <div className="text-xl lg:w-96">
-                    <p className="underline mb-3 font-bold text-center text-2xl">Reviews: {reviews.length}</p>
+                    <p className="underline mb-3 font-bold text-center text-2xl">Reviews: {reviews?.length}</p>
                     {
                         reviews.length !== 0 ? <Carousel autoPlay={true} infiniteLoop={true} className="h-fit w-96">
                             {
@@ -203,7 +215,11 @@ const RoomDetails = () => {
                             <option value='4'>4</option>
                             <option value='5'>5</option>
                         </select>
-                        <button className="btn btn-primary">Submit</button>
+                        {
+                            booked ?
+                                <button className="btn btn-primary">Submit</button> :
+                                <button disabled className="btn btn-primary">Submit</button>
+                        }
                     </div>
                 </form>
             </div>
