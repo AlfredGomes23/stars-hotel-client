@@ -3,7 +3,7 @@ import useMyContext from './useMyContext';
 import { useNavigate } from 'react-router-dom';
 
 export const axiosSecure = axios.create({
-    baseURL: 'https://sever-stars-hotel.vercel.app',
+    baseURL: 'http://localhost:5000',
     withCredentials: true
 });
 const useSecureAxios = () => {

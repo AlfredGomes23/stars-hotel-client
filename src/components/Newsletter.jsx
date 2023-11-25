@@ -9,7 +9,7 @@ const Newsletter = () => {
         });
     }, []);
     return (
-        <div className="min-h-min my-10 flex-shrink-0 w-full shadow-2xl bg-base-100 h-fit flex flex-col md:flex-row gap-5" data-aos="flip-left">
+        <div className="min-h-min my-10 flex-shrink-0 w-full shadow-2xl bg-base-100 h-fit flex flex-col md:flex-row gap-5 rounded-xl" data-aos="flip-left">
             <div className="text-center md:w-2/3">
                 <h1 className="text-3xl lg:text-5xl font-bold">Newsletter</h1>
                 <p className="py-6 text-xl">Stay in the Know! Subscribe to Our Newsletter for Exclusive Offers, Travel Tips, and Hotel Updates. Be the First to Receive Special Deals and Exciting News Straight to Your Inbox. Join our community of savvy travelers today!</p>

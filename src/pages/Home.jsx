@@ -15,10 +15,10 @@ const Home = () => {
             <Helmet>
                 <title>Home</title>
             </Helmet>
-            <OfferBanner></OfferBanner>
             <Banner></Banner>
-            <FeaturedRooms></FeaturedRooms>
+            <OfferBanner></OfferBanner>
             <Newsletter></Newsletter>
+            <FeaturedRooms></FeaturedRooms>
         </div>
     );
 };

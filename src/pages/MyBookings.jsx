@@ -84,7 +84,7 @@ const MyBookings = () => {
             <Helmet>
                 <title>My Bookings</title>
             </Helmet>
-            <h1 className="text-4xl my-10 underline">My Bookings: {bookings?.length}</h1>
+            <h1 className="text-4xl my-10 text-center underline">My Bookings: {bookings?.length}</h1>
             <div>{
                 bookings?.map(booking => <BookingCard key={booking._id} booking={booking} handleDelete={handleDelete}></BookingCard>)
             }</div>

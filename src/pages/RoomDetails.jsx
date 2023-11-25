@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
-import { useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import useMyContext from "../hooks/useMyContext";
 import toast from "react-hot-toast";
 import useAxiosPublic from "../hooks/useAxiosPublic";
@@ -41,12 +41,17 @@ const RoomDetails = () => {
     const { type, img, price, reviews, description, discount, availability, room_size } = room;
     const axiosPublic = useAxiosPublic();
     const axiosSecure = useSecureAxios();
+    const navigate = useNavigate();
+    const location = useLocation();
     // console.log(booked);
 
     //check booked
     const checkBooked = async () => {
-        const { data } = await axiosSecure.get(`/isBooked?email=${user?.email}&roomId=${id}`)
-        setBooked(data.isBooked);
+        // if(!user.email) return setBooked(false);
+        if (user?.email) {
+            const { data } = await axiosPublic.get(`/isBooked?email=${user?.email}&roomId=${id}`)
+            setBooked(data.isBooked);
+        }
     };
     coming && checkBooked();
 
@@ -63,6 +68,8 @@ const RoomDetails = () => {
 
     const handleSubmit = e => {
         e.preventDefault();
+
+        if (!user?.email) return navigate('/login-register', { state: { from: location } });
         setChecking(true);
 
         const from = e.target;
@@ -94,6 +101,7 @@ const RoomDetails = () => {
                     const booking = {
                         email, roomId: id, date, price: b_price, description, img, type
                     };
+                    //book room
                     axiosSecure.post('/bookings', booking)
                         .then(data => {
                             // console.log(data.data);
@@ -120,7 +128,7 @@ const RoomDetails = () => {
         const rating = e.target.rating.value;
         console.log(rating);
         //rating check
-        if(rating === 'rating') return toast.error("Require A Rating selection.");
+        if (rating === 'rating') return toast.error("Require A Rating selection.");
 
         const review = { email: user?.email, comment, rating, date: utcDate };
         // console.log(review);
@@ -174,7 +182,7 @@ const RoomDetails = () => {
                                     <img src="" alt="" />
                                     <h5 className="text-sm text-primary font-semibold">Rating: {review?.rating}</h5>
                                     <h3 className="text-sm text-secondary">{review?.email}</h3>
-                                    <p className="text-xl text-accent">{`" ${review.comment} "`}</p>
+                                    <p className="text-xl">{`" ${review.comment} "`}</p>
                                     <small className="text-sm"><Timestamp date={review.date} /></small>
                                 </div>)
                             }

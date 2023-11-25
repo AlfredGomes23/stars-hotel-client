@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useParams } from 'react-router-dom';
 import toast from "react-hot-toast";
-import useAxiosPublic from "../hooks/useAxiosPublic";
 import swal from 'sweetalert';
 import useSecureAxios from "../hooks/useSecureAxios";
 
@@ -32,19 +31,18 @@ const UpdateBooking = () => {
     const [checking, setChecking] = useState(false);
     const [update, setUpdate] = useState(false);
     const [coming, setComing] = useState(true);
-    const axiosPublic = useAxiosPublic();
     const axiosSecure = useSecureAxios();
 
     useEffect(() => {
 
         const f = async () => {
-            const { data } = await axiosPublic.get(`/booking/${b_id}`);
+            const { data } = await axiosSecure.get(`/booking/${b_id}`);
             // console.log(data);
             setBooking(data);
             setComing(false);
             setUpdate(false)
         }; f();
-    }, [b_id, axiosPublic, update]);
+    }, [b_id, axiosSecure, update]);
 
 
     const handleSubmit = e => {
@@ -107,10 +105,10 @@ const UpdateBooking = () => {
                     <p className="font-semibold">Booked Date: {booking?.date}</p>
                 </div>
             </div>
-            {/* booking */}
-            <div className="bg-base-100 flex-col lg:w-1/2 mx-auto my-10">
-                <div className=" flex-shrink-0 w-full shadow-2xl bg-base-200">
-                    <h1 className="text-center text-5xl font-bold mb-5">Update Date now!</h1>
+            {/* update */}
+            <div className="bg-base-200 flex-col lg:w-1/2 mx-auto my-10 shadow-2xl pb-5 rounded-lg">
+                <div className=" flex-shrink-0 w-full">
+                    <h1 className="text-center text-3xl lg:text-5xl font-bold mb-5">Update Date now!</h1>
                 </div>
                 <form onSubmit={handleSubmit} className="flex flex-col md:flex-row justify-around w-2/3 mx-auto">
                     <div className="form-control">

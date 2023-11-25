@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 export const axiosPublic = axios.create({
-    baseURL: 'https://sever-stars-hotel.vercel.app',
+    baseURL: 'http://localhost:5000',
     withCredentials:true
 });
 const useAxiosPublic = () => {
