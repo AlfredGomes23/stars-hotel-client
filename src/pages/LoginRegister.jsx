@@ -53,7 +53,9 @@ const LoginRegister = () => {
         const url = form.url.value;
         const email = form.email.value;
         const password = form.password.value;
-        console.log(name, url, email, password);
+        // console.log(name, url, email, password);
+        //password validation
+        if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/.test(password)) return toast.error("Your Password Must contain At least A upper case and A lower case letter, also a number.");
         //create new user
         signUp(email, password)
             .then(res => {

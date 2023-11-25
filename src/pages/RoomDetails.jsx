@@ -118,6 +118,9 @@ const RoomDetails = () => {
         const utcDate = moment.utc().format();
         const comment = e.target.comment.value;
         const rating = e.target.rating.value;
+        console.log(rating);
+        //rating check
+        if(rating === 'rating') return toast.error("Require A Rating selection.");
 
         const review = { email: user?.email, comment, rating, date: utcDate };
         // console.log(review);
@@ -159,7 +162,7 @@ const RoomDetails = () => {
                     <img className="rounded-lg" src={img} alt="" />
                 </div>
             </div>
-
+            {/* page bottom part */}
             <div className="flex flex-col lg:flex-row gap-5 items-center">
                 {/* reviews */}
                 <div className="text-xl lg:w-96">
@@ -169,9 +172,9 @@ const RoomDetails = () => {
                             {
                                 reviews?.map((review, idx) => <div key={idx} className="space-y-4 rounded-lg overflow-hidden bg-[#0000003a]">
                                     <img src="" alt="" />
-                                    <h5 className="text-xl text-primary font-semibold">Rating: {review?.rating}</h5>
-                                    <h3 className="text-xl text-secondary">{review?.email}</h3>
-                                    <p className="text-lg text-accent">{`" ${review.comment} "`}</p>
+                                    <h5 className="text-sm text-primary font-semibold">Rating: {review?.rating}</h5>
+                                    <h3 className="text-sm text-secondary">{review?.email}</h3>
+                                    <p className="text-xl text-accent">{`" ${review.comment} "`}</p>
                                     <small className="text-sm"><Timestamp date={review.date} /></small>
                                 </div>)
                             }
