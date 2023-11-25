@@ -126,7 +126,7 @@ const RoomDetails = () => {
         const utcDate = moment.utc().format();
         const comment = e.target.comment.value;
         const rating = e.target.rating.value;
-        console.log(rating);
+        // console.log(rating);
         //rating check
         if (rating === 'rating') return toast.error("Require A Rating selection.");
 
