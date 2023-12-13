@@ -28,6 +28,7 @@ const dateDiff = (b_date) => {
 const MyBookings = () => {
     const { user } = useMyContext();
     const [bookings, setBookings] = useState();
+    // const [totalPrice, setTotalPrice] = useState(0);
     const [coming, setComing] = useState(true);
     const axiosSecure = useSecureAxios();
 
@@ -36,6 +37,7 @@ const MyBookings = () => {
         const f = async () => {
             const { data } = await axiosSecure.get(`/bookings?email=${user?.email}`);
             setBookings(data);
+            // setTotalPrice(data?);
             setComing(false);
         }; f();
 
@@ -73,6 +75,7 @@ const MyBookings = () => {
 
     }
 
+    // console.log(totalPrice);
     //loading
     if (coming) return <span className="loading loading-bars loading-lg flex justify-center items-center mx-auto"></span>;
 
@@ -84,10 +87,14 @@ const MyBookings = () => {
             <Helmet>
                 <title>My Bookings</title>
             </Helmet>
-            <h1 className="text-4xl my-10 text-center underline">My Bookings: {bookings?.length}</h1>
+            <h1 className="text-4xl my-10 flex justify-between">
+                <span className="underline">My Bookings: {bookings?.length}</span>
+                <span className="text-primary underline">Total Price: ${bookings?.reduce((sum, booking) => sum += booking.price, 0)}</span>
+            </h1>
             <div>{
                 bookings?.map(booking => <BookingCard key={booking._id} booking={booking} handleDelete={handleDelete}></BookingCard>)
             }</div>
+            <p className="text-primary underline my-3 text-right"></p>
         </div>
     );
 };
