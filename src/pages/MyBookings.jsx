@@ -87,9 +87,9 @@ const MyBookings = () => {
             <Helmet>
                 <title>My Bookings</title>
             </Helmet>
-            <h1 className="text-4xl my-10 flex justify-between">
+            <h1 className="text-4xl my-10 flex gap-3 flex-col md:flex-row justify-between">
                 <span className="underline">My Bookings: {bookings?.length}</span>
-                <span className="text-primary underline">Total Price: ${bookings?.reduce((sum, booking) => sum += booking.price, 0)}</span>
+                <span className="text-primary underline text-right md:text-left">Total Price: ${bookings?.reduce((sum, booking) => sum += booking.price, 0)}</span>
             </h1>
             <div>{
                 bookings?.map(booking => <BookingCard key={booking._id} booking={booking} handleDelete={handleDelete}></BookingCard>)
